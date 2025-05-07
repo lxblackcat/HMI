@@ -4,94 +4,82 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HMI"
-        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
         mc:Ignorable="d"
-        Title="HRG数据采集与误差补偿软件  ----  所有权:HEU(青岛)-惯性传感与导航技术实验室" Height="648" Width="1152">
+        Title="HRG数据采集软件  ----  所有权:HEU(青岛)-惯性传感与导航技术实验室" Height="648" Width="1152">
     <Viewbox Stretch="UniformToFill">
-        <Grid>
-            <Rectangle Height="790" Width="1210" Fill="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Grid Background="WhiteSmoke">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="450"/>
+                <RowDefinition Height="340"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1210"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <UniformGrid Rows="6" Columns="1">
+                    <ScottPlot:WpfPlot x:Name="a_plot" Margin="0"/>
+                    <ScottPlot:WpfPlot x:Name="q_plot" Margin="0"/>
+                    <ScottPlot:WpfPlot x:Name="delta_plot" Margin="0"/>
+                    <ScottPlot:WpfPlot x:Name="f_plot" Margin="0"/>
+                    <ScottPlot:WpfPlot x:Name="theta_plot" Margin="0"/>
+                    <ScottPlot:WpfPlot x:Name="Omega_plot" Margin="0"/>
+                </UniformGrid>
+            </Grid>
+            <Grid Grid.Row="1">
+                <CheckBox x:Name="Cb_AutoFit" Content="Auto" HorizontalAlignment="Left" Margin="240,5,0,0" VerticalAlignment="Top" Checked="Cb_AutoFit_Checked" Unchecked="Cb_AutoFit_Unchecked"/>
+                <RadioButton x:Name="Draw_1Hz" Content="1Hz绘制" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,5,0,0" Checked="Draw_1Hz_Checked"/>
+                <CheckBox x:Name="Save_1Hz" Content="1Hz保存" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="Save_1Hz_Checked" Unchecked="Save_1Hz_Unchecked" Margin="20,28,0,0"/>
+                <TextBox x:Name="save_path_1Hz" Height="20" Width="100" IsEnabled="False" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,26,0,0"/>
+                <Button x:Name="Btn_1Hz" Content="..." Width="40" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Btn_1Hz_Click" Margin="240,26,0,0"/>
 
-            <!-- 使用OxyPlot的PlotView代替ScottPlot的WpfPlot -->
-            <oxy:PlotView x:Name="a_plot" VerticalAlignment="Top" Height="88" Margin="0,-12,0,0"/>
-            <oxy:PlotView x:Name="q_plot" VerticalAlignment="Top" Height="88" Margin="0,65,0,0"/>
-            <oxy:PlotView x:Name="delta_plot" VerticalAlignment="Top" Height="88" Margin="0,142,0,0"/>
-            <oxy:PlotView x:Name="f_plot" VerticalAlignment="Top" Height="88" Margin="0,219,0,0"/>
-            <oxy:PlotView x:Name="theta_plot" VerticalAlignment="Top" Height="88" Margin="0,296,0,0"/>
-            <oxy:PlotView x:Name="Omega_plot" VerticalAlignment="Top" Height="88" Margin="0,372,0,0"/>
-            <RadioButton x:Name="draw_1Hz" Content="1Hz绘制" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,457,0,0" Checked="draw_1Hz_Checked"/>
-            <CheckBox x:Name="save_1Hz" Content="1Hz保存" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                      Checked="save_1Hz_Checked" Unchecked="save_1Hz_Unchecked" Margin="20,480,0,0"/>
-            <TextBox x:Name="save_path_1Hz" Height="20" Width="100" IsEnabled="False" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,478,0,0"/>
-            <Button x:Name="btn_1Hz" Content="..." Width="40" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    Click="btn_1Hz_Click"  Margin="240,478,0,0"/>
+                <RadioButton x:Name="Draw_100Hz" Content="100Hz绘制" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,5,0,0" Checked="Draw_100Hz_Checked"/>
+                <CheckBox x:Name="Save_100Hz" Content="100Hz保存" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="Save_100Hz_Checked" Unchecked="Save_100Hz_Unchecked" Margin="20,50,0,0"/>
+                <TextBox x:Name="save_path_100Hz" Height="20" Width="100" IsEnabled="False" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,48,0,0"/>
+                <Button x:Name="Btn_100Hz" Content="..." IsEnabled="False" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Btn_100Hz_Click" Margin="240,48,0,0"/>
+                <Label Content="波特率：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,71,0,0"/>
+                <ComboBox x:Name="Baud_rate" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,73,0,0"/>
+                <Label Content="端口号：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,96,0,0"/>
+                <ComboBox x:Name="com" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,98,0,0"/>
+                <Label Content="采样时间（s）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,120,0,0"/>
+                <TextBox x:Name="sample_time" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,123,0,0"/>
+                <Label Content="当前时间（s）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,145,0,0"/>
+                <TextBox x:Name="current_time" IsReadOnly="True" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,148,0,0"/>
 
-            <RadioButton x:Name="draw_100Hz" Content="100Hz绘制" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,457,0,0" Checked="draw_100Hz_Checked"/>
-            <CheckBox x:Name="save_100Hz" Content="100Hz保存" HorizontalAlignment="Left" VerticalAlignment="Top"
-                      Checked="save_100Hz_Checked" Unchecked="save_100Hz_Unchecked" Margin="20,502,0,0"/>
-            <TextBox x:Name="save_path_100Hz" Height="20" Width="100" IsEnabled="False" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,500,0,0"/>
-            <Button x:Name="btn_100Hz" Content="..." IsEnabled="False" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Click="btn_100Hz_Click" Margin="240,500,0,0"/>
-
-            <Label Content="波特率：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,523,0,0"/>
-            <ComboBox x:Name="Baud_rate" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,525,0,0"/>
-
-            <Label Content="端口号：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,548,0,0"/>
-            <ComboBox x:Name="com" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,550,0,0"/>
-
-            <Label Content="采样时间（s）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,572,0,0"/>
-            <TextBox x:Name="sample_time" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,575,0,0"/>
-
-            <Label Content="当前时间（s）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,597,0,0"/>
-            <TextBox x:Name="current_time" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="135,600,0,0"/>
-
-            <Label Content="a（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,475,0,0"/>
-            <TextBox x:Name="a" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,478,0,0"/>
-
-            <Label Content="q（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,500,0,0"/>
-            <TextBox x:Name="q" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,503,0,0"/>
-
-            <Label Content="delta（deg）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,525,0,0"/>
-            <TextBox x:Name="delta" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,528,0,0"/>
-
-            <Label Content="f（Hz）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,550,0,0"/>
-            <TextBox x:Name="f" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,553,0,0"/>
-
-            <Label Content="Temp(℃)：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,575,0,0"/>
-            <TextBox x:Name="Temp" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,578,0,0"/>
-
-            <Label Content="a__PID（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,475,0,0"/>
-            <TextBox x:Name="a_PID" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,478,0,0"/>
-
-            <Label Content="q__PID（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,500,0,0"/>
-            <TextBox x:Name="q_PID" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,503,0,0"/>
-
-            <Label Content="theta（deg）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,525,0,0"/>
-            <TextBox x:Name="theta" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,528,0,0"/>
-
-            <Label Content="Omega（deg/s）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,550,0,0"/>
-            <TextBox x:Name="Omega" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,553,0,0"/>
-
-            <Label Content="theta__PID（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,575,0,0"/>
-            <TextBox x:Name="theta_PID" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,578,0,0"/>
-
-            <Label Content="cx（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,475,0,0"/>
-            <TextBox x:Name="cx" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,478,0,0"/>
-
-            <Label Content="cy（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,500,0,0"/>
-            <TextBox x:Name="cy" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,503,0,0"/>
-
-            <Label Content="sx（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,525,0,0"/>
-            <TextBox x:Name="sx" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,528,0,0"/>
-
-            <Label Content="sy（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,550,0,0"/>
-            <TextBox x:Name="sy" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,553,0,0"/>
-
-            <Label Content="scale(LSB(deg/h))：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,575,0,0"/>
-            <TextBox x:Name="scale" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,578,0,0"/>
-
-            <Button x:Name="start" Content="开始" Width="50" Height="21" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                     Click="start_Click" Margin="1038,460,0,0"/>
-            <TextBox x:Name="TextBox" Width="150" Height="134" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1030,488,0,0"/>
+                <Label Content="a（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,23,0,0"/>
+                <TextBox x:Name="a" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,26,0,0"/>
+                <Label Content="q（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,48,0,0"/>
+                <TextBox x:Name="q" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,51,0,0"/>
+                <Label Content="delta（deg）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,73,0,0"/>
+                <TextBox x:Name="delta" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,76,0,0"/>
+                <Label Content="f（Hz）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,98,0,0"/>
+                <TextBox x:Name="f" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,101,0,0"/>
+                <Label Content="Temp(℃)：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,123,0,0"/>
+                <TextBox x:Name="Temp" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="412,126,0,0"/>
+                <Label Content="a__PID（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,23,0,0"/>
+                <TextBox x:Name="a_PID" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,26,0,0"/>
+                <Label Content="q__PID（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,48,0,0"/>
+                <TextBox x:Name="q_PID" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,51,0,0"/>
+                <Label Content="theta（deg）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,73,0,0"/>
+                <TextBox x:Name="theta" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,76,0,0"/>
+                <Label Content="Omega（deg/s）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,98,0,0"/>
+                <TextBox x:Name="Omega" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,101,0,0"/>
+                <Label Content="theta__PID（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="522,123,0,0"/>
+                <TextBox x:Name="theta_PID" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="649,126,0,0"/>
+                <Label Content="cx（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,23,0,0"/>
+                <TextBox x:Name="cx" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,26,0,0"/>
+                <Label Content="cy（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,48,0,0"/>
+                <TextBox x:Name="cy" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,51,0,0"/>
+                <Label Content="sx（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,73,0,0"/>
+                <TextBox x:Name="sx" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,76,0,0"/>
+                <Label Content="sy（LSB）：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,98,0,0"/>
+                <TextBox x:Name="sy" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,101,0,0"/>
+                <Label Content="scale(LSB(deg/h))：" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="769,123,0,0"/>
+                <TextBox x:Name="scale" Height="20" Width="100" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="896,126,0,0"/>
+                <Button x:Name="Btn_start" Content="开始" Width="50" Height="21" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Btn_start_Click" Margin="1030,5,0,0"/>
+                <Button x:Name="EC_btn" Content="误差补偿" Width="60" Height="21" HorizontalAlignment="Left" VerticalAlignment="Top" Click="EC_btn_Click" Margin="1120,5,0,0"/>
+                <TextBox x:Name="stateTextBox" Width="150" Height="134" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1030,36,0,0" IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+            </Grid>
         </Grid>
     </Viewbox>
 </Window>
